@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/indiana-university/rivet-add-on-boilerplate-lite.git"
   },
-  "main": "dist/js/rivet-add-on-boilerplate-lite.js",
+  "main": "dist/js/rivet-character-count.js",
   "scripts": {
     "start": "npx gulp",
     "build": "npx gulp build"
