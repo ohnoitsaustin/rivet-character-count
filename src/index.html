@@ -64,10 +64,10 @@
       <!-- HTML -->
       <div class="rvt-example">
         <div class="rvt-example__demo">
-          <button class="rvt-button rvt-button--fancy">Click me</button>
+          <input type="text" data-text-counter="field-name">
         </div>
         <div class="rvt-example__code">
-          <pre><code class="html">&lt;button class=&quot;rvt-button rvt-button--fancy&quot;&gt;Click me&lt;/button&gt;</code></pre>
+          <pre><code class="html">&lt;input type=&quot;text&quot; data-text-counter="field-name" &gt;</code></pre>
         </div>
       </div>
 
@@ -211,8 +211,8 @@ component.init();</code></pre>
       hljs.initHighlightingOnLoad();
 
       // If your add-on requires JavaScript, do any initialization here.
-      const component = new MyComponent('.rvt-button--fancy');
-      component.init();
+      const counter = new TextCounter('field-name');
+      counter.init();
 
     </script>
   </body>

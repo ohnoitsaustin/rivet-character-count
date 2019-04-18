@@ -8,7 +8,7 @@
  * and any references to it in index.html.
  */
 
-const MyComponent = (function() {
+const TextCounter = (function() {
   
   'use strict';
 
@@ -26,10 +26,10 @@ const MyComponent = (function() {
    * const component = new MyComponent('button.rvt-fancy-button');
    */
   
-  const Constructor = function(selector) {
-    this.nodes = document.querySelectorAll(selector);
-
-    // Any other code you need to initialize your component goes here.
+  const Constructor = function(ids) {
+    if(!Array.isArray(ids)) {
+      this.ids = [ids];
+    }
   };
 
   /**
@@ -42,8 +42,8 @@ const MyComponent = (function() {
    * in the constructor method above are clicked.
    */
 
-  const handleClick = function() {
-    alert('Button clicked!');
+  const handleInput = function() {
+    generateFeedbackEl(this.getAttribute("data-text-counter"))
   }
 
   const somePrivateMethod = function() {
@@ -60,15 +60,38 @@ const MyComponent = (function() {
    * listener calls the handleClick private method defined above.
    */
 
+   const currentCharCount = function(el) {
+      return el.value.length;
+   }
+
+   const generateFeedbackEl = function(inputId) {
+     console.log(inputId);
+      let feedbackEl = document.querySelector(`[data-text-counter-feedback=${inputId}]`);
+      const inputEl = document.querySelector(`[data-text-counter=${inputId}]`);
+      if(!feedbackEl) {
+        feedbackEl = document.createElement('small');
+        feedbackEl.setAttribute("data-text-counter-feedback", inputId);
+        inputEl.parentNode.insertBefore(feedbackEl, inputEl.nextSibling);
+      }
+      const lengthEntered = currentCharCount(inputEl);
+      const lengthMax = inputEl.getAttribute("data-max-characters") || 50;
+      feedbackEl.innerHTML = `${lengthEntered}/${lengthMax} characters`;
+   }
+   
+
   Constructor.prototype.init = function() {
-    this.nodes.forEach((button) => {
-      button.addEventListener('click', handleClick);
+    console.log(this.ids)
+    this.ids.forEach((inputId) => {
+      const inputEl = document.querySelector(`[data-text-counter=${inputId}]`);
+      if(inputEl) {
+        inputEl.addEventListener('input', handleInput);
+        generateFeedbackEl(inputId);
+      }
+      else {
+        console.error(`Unable to attach rivet-character-count to [data-text-counter="${inputId}"]`);
+      }
     });
   };
-
-  Constructor.prototype.somePublicMethod = function(arg1, arg2, etc) {
-    // Do something useful.
-  }
 
   return Constructor;
 
